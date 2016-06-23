@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test Angular</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+		<script src="ng-clock.js"></script>
+		<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+		<link rel="stylesheet" type="text/css" href="ng-clock.css">
+		<!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-animate.min.js"></script> -->
+		<script type="text/javascript">
+			angular.module('clock_module', ['s-clock'])
+				.service('srv', ['$rootScope', function($rootScope) {
+				this.change_name = function(argument) {
+					$rootScope.name = argument;
+					}
+				}])
+				.controller('ngC1', ['$scope', '$rootScope', '$timeout', 'srv', '$interval', function($scope, $rootScope, $timeout, srv, $interval) {
+						$scope.digital = new Date();
+						$scope.datetime = new Date();
+						$scope.alarmTime = new Date('17:03');
+						$interval(function() {
+							$scope.digital = new Date();
+						}, 1000);
+			}]);
+		</script>
+	</head>
+	<body ng-app="clock_module">
+		<div class="controller" ng-controller="ngC1">
+			<h1>{{digital | date : 'hh:mm:ss'}}</h1>
+			<div class="clock-container">
+				<clock
+				hand-hr-img=""
+				hand-sec-img=""
+				hand-min-img=""
+				datetime="datetime"
+				brand-name="Omega"
+				brand-logo="logo.png"
+				smooth="false"
+				hand-color="blue"
+				radius="20"
+				show-date="true"></clock>
+			</div>
+		</div>
+	</body>
+</html>
